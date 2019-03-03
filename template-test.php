@@ -29,7 +29,7 @@ file_put_contents('write-test.txt', 'OK');
 if (!file_exists('write-test.txt')) {
     echo '<h2 style="color: red;">ERROR: you do not have write access</h2>';
 } else {
-    unlink('io.test');
+    unlink('write-test.txt');
 }
 ?>
     </body>
