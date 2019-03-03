@@ -41,7 +41,7 @@ Edit `websitesconf.sh` and change the value of `websites_count` to choose the nu
 
 ### Passwords
 
-Edit `websitesconf.sh` and change the value of `base_passwd` and `mysql_passwd_base` to choose the password base for the user account and the mysql user.
+Edit `websitesconf.sh` and change the value of `user_base_passwd` and `mysql_passwd_base` to choose the password base for the user account and the mysql user.
 
 ### Virtual host
 
