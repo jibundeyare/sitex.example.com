@@ -1,0 +1,6 @@
+#!/bin/bash
+
+websites_count=10
+base_passwd="foo"
+mysql_passwd_base="bar"
+
