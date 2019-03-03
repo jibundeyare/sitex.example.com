@@ -22,8 +22,8 @@ All names have the following common base : `siteXX` where XX is an integer from 
 
 ## Prerequisites
 
-- Unix system
-- Apache 2.x
+- Linux system
+- Apache 2.4
 - MariaDB 15.x
 - PHP 7.x FPM
 
