@@ -1,5 +1,6 @@
 #!/bin/bash
 
+domain_name="example.com"
 websites_count=10
 base_passwd="foo"
 mysql_passwd_base="bar"

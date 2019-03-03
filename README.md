@@ -17,7 +17,7 @@ All names have the following common base : `siteXX` where XX is an integer from 
 - the home directories are `/home/siteXX`
 - the databases users are `siteXX`
 - the databases are `siteXX`
-- the dedicated Apache2 virtual hosts are `siteXX.popschool-lens.fr`
+- the dedicated Apache2 virtual hosts are if the form `siteXX.example.com`
 - the dedicated PHP FPM pools are `siteXX`
 
 ## Prerequisites
@@ -30,6 +30,10 @@ All names have the following common base : `siteXX` where XX is an integer from 
 ## Configuration
 
 Copy `websitesconf.sh.dist` as `websitesconf.sh` and choose appropriate values.
+
+### Domain name
+
+Edit `websitesconf.sh` and change the value of `domain_name` to choose the domain name of the sites you want to create.
 
 ### Number of web sites
 

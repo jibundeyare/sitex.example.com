@@ -29,6 +29,7 @@ do
 
 	# vhost
 	cp $vhost_template /etc/apache2/sites-available/$my_user.conf
+	sed -i "s/{domain_name}/$domain_name/g" /etc/apache2/sites-available/$my_user.conf
 	sed -i "s/{my_user}/$my_user/g" /etc/apache2/sites-available/$my_user.conf
 	a2ensite $my_user
 

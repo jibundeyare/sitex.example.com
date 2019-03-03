@@ -22,8 +22,8 @@ do
 	# vhost
 	a2dissite $my_user
 	rm /etc/apache2/sites-available/$my_user.conf
-	rm /var/log/apache2/$my_user.popschool-lens.fr.access.log*
-	rm /var/log/apache2/$my_user.popschool-lens.fr.error.log*
+	rm /var/log/apache2/$my_user.$domain_name.access.log*
+	rm /var/log/apache2/$my_user.$domain_name.error.log*
 
 	# database
 	echo "DROP USER '$my_user'@'%';" | mysql
