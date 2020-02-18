@@ -4,4 +4,5 @@ domain_name="example.com"
 websites_count=10
 user_base_passwd="foo"
 mysql_passwd_base="bar"
+php_script="foobarbaz-test.php"
 

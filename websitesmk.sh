@@ -3,7 +3,7 @@
 source websitesconf.sh
 
 html_template="./template-index.html"
-php_template="./template-test.php"
+php_script_template="./template-test.php"
 vhost_template="./template-vhost.conf"
 pool_template="./template-pool.conf"
 
@@ -24,7 +24,7 @@ do
 	mkdir /home/$my_user/www
 	cp $html_template /home/$my_user/www/index.html
 	sed -i "s/{my_user}/$my_user/g" /home/$my_user/www/index.html
-	cp $php_template /home/$my_user/www/test.php
+	cp $php_script_template /home/$my_user/www/$php_script
 	chown -R $my_user:$my_user /home/$my_user
 
 	# vhost
