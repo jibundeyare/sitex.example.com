@@ -5,7 +5,7 @@ source websitesconf.sh
 systemctl stop apache2
 systemctl stop php7.3-fpm
 
-ids="$(seq -w $websites_count)"
+ids="$(seq -w $websites_seq_start $websites_seq_end)"
 
 for id in $ids
 do

@@ -7,7 +7,7 @@ php_script_template="./template-test.php"
 vhost_template="./template-vhost.conf"
 pool_template="./template-pool.conf"
 
-ids="$(seq -w $websites_count)"
+ids="$(seq -w $websites_seq_start $websites_seq_end)"
 
 for id in $ids
 do

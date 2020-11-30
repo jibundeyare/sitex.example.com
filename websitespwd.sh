@@ -2,7 +2,7 @@
 
 source websitesconf.sh
 
-ids="$(seq -w $websites_count)"
+ids="$(seq -w $websites_seq_start $websites_seq_end)"
 
 for id in $ids
 do
