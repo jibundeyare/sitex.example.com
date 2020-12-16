@@ -1,4 +1,6 @@
-# Batch creation of web sites
+# sitex.example.com
+
+A tool for batch creation of web sites.
 
 This set of scripts creates a number of user accounts, virtual hosts and mysql users and databases.
 
