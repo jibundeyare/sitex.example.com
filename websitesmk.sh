@@ -16,7 +16,7 @@ do
 
 	# folder
 	sudo cp -r /etc/skel /home/$username
-	sudo mkdir /home/$username/www
+	sudo mkdir -p /home/$username/www
 
 	# copy php index file to website directory
 	sudo cp template-index.php /home/$username/www/index.php
@@ -45,7 +45,7 @@ do
 	echo "FLUSH PRIVILEGES;" | sudo mysql
 
 	# create a dedicated php session directory
-	sudo mkdir /var/lib/php/sessions/$username
+	sudo mkdir -p /var/lib/php/sessions/$username
 
 	# set appropriate rights (drwx-wx-wt) on the dedicated php sessions directory
 	sudo chmod 1733 /var/lib/php/sessions/$username
