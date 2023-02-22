@@ -88,3 +88,13 @@ To remove web sites;
 
 	sudo ./websitesrm.sh
 
+## Tips when using Filezilla
+
+When using the Quickconnect feature, do not forget to specify the network protocol in the Host field.
+This is necessary if the ssh port is not the default one (ie not `22`).
+
+Example:
+
+- Host: `sftp://123.123.123.123`
+- Port: `54321`
+
