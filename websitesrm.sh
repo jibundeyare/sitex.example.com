@@ -21,9 +21,9 @@ do
 
 	# vhost
 	sudo a2dissite $username
-	sudo rm /etc/apache2/sites-available/$username.conf
-	sudo rm /var/log/apache2/$username.$domain.access.log*
-	sudo rm /var/log/apache2/$username.$domain.error.log*
+	sudo rm -f /etc/apache2/sites-available/$username.conf
+	sudo rm -f /var/log/apache2/$username.$domain.access.log*
+	sudo rm -f /var/log/apache2/$username.$domain.error.log*
 
 	# database
 	echo "DROP USER '$username'@'localhost';" | sudo mysql
@@ -31,10 +31,10 @@ do
 	echo "FLUSH PRIVILEGES;" | sudo mysql
 
 	# php fpm
-	sudo rm /etc/php/$php_version/fpm/pool.d/$username.conf
+	sudo rm -f /etc/php/$php_version/fpm/pool.d/$username.conf
 
 	# remove the dedicated php session directory
-	sudo rm -r /var/lib/php/sessions/$username
+	sudo rm -fr /var/lib/php/sessions/$username
 
 done
 
