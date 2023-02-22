@@ -2,19 +2,19 @@
 
 source websitesconf.sh
 
-ids="$(seq -w $websites_seq_start $websites_seq_end)"
+ids="$(seq -w $websites_start $websites_end)"
 
 for id in $ids
 do
-	my_user="site${id}"
+	username="$website_prefix$id"
 
-	echo "updating password for $my_user"
+	echo "updating password for $username"
 
-	# account
-	echo "$my_user:$user_base_passwd$my_user" | chpasswd
+	# set account password
+	echo "$username:$user_passwd_base$username" | chpasswd
 
-	# database
-	echo "GRANT USAGE ON *.* TO '$my_user'@'%' IDENTIFIED BY '$mysql_passwd_base$my_user';" | mysql
+	# set database user password
+	echo "GRANT USAGE ON *.* TO '$username'@'localhost' IDENTIFIED BY '$mysql_passwd_base$username';" | mysql
 done
 
 systemctl restart sshd

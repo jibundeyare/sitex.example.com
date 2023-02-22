@@ -1,9 +1,11 @@
 #!/bin/bash
 
-domain_name="example.com"
-websites_seq_start=1
-websites_seq_end=10
-user_base_passwd="foo"
+website_prefix="website"
+websites_start=01
+websites_end=10
+domain="example.com"
+user_passwd_base="foo"
 mysql_passwd_base="bar"
-php_script="foobarbaz-test.php"
+vhost_template="template-vhost.conf"
+php_version="8.2"
 

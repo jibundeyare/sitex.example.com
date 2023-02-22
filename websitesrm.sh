@@ -3,37 +3,41 @@
 source websitesconf.sh
 
 systemctl stop apache2
-systemctl stop php7.3-fpm
+systemctl stop php$php_version-fpm
 
-ids="$(seq -w $websites_seq_start $websites_seq_end)"
+ids="$(seq -w $websites_start $websites_end)"
 
 for id in $ids
 do
-	my_user="site${id}"
+	username="$website_prefix$id"
 
-	echo "deleting $my_user"
+	echo "deleting $username"
 
 	# account
-	userdel $my_user
+	userdel $username
 
 	# folder
-	rm -fr /home/$my_user
+	rm -fr /home/$username
 
 	# vhost
-	a2dissite $my_user
-	rm /etc/apache2/sites-available/$my_user.conf
-	rm /var/log/apache2/$my_user.$domain_name.access.log*
-	rm /var/log/apache2/$my_user.$domain_name.error.log*
+	a2dissite $username
+	rm /etc/apache2/sites-available/$username.conf
+	rm /var/log/apache2/$username.$domain.access.log*
+	rm /var/log/apache2/$username.$domain.error.log*
 
 	# database
-	echo "DROP USER '$my_user'@'%';" | mysql
-	echo "DROP DATABASE $my_user;" | mysql
+	echo "DROP USER '$username'@'localhost';" | mysql
+	echo "DROP DATABASE $username;" | mysql
 	echo "FLUSH PRIVILEGES;" | mysql
 
 	# php fpm
-	rm /etc/php/7.3/fpm/pool.d/$my_user.conf
+	rm /etc/php/$php_version/fpm/pool.d/$username.conf
+
+	# remove the dedicated php session directory
+	rm -r /var/lib/php/sessions/$username
+
 done
 
 systemctl start apache2
-systemctl start php7.3-fpm
+systemctl start php$php_version-fpm
 

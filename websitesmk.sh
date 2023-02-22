@@ -2,48 +2,62 @@
 
 source websitesconf.sh
 
-html_template="./template-index.html"
-php_script_template="./template-test.php"
-vhost_template="./template-vhost.conf"
-pool_template="./template-pool.conf"
-
-ids="$(seq -w $websites_seq_start $websites_seq_end)"
+ids="$(seq -w $websites_start $websites_end)"
 
 for id in $ids
 do
-	my_user="site${id}"
+	username="$website_prefix$id"
 
-	echo "creating $my_user"
+	echo "creating $username"
 
 	# account
-	useradd $my_user
-	usermod -s /bin/bash $my_user
+	useradd $username
+	usermod -s /bin/bash $username
 
 	# folder
-	cp -r /etc/skel /home/$my_user
-	mkdir /home/$my_user/www
-	cp $html_template /home/$my_user/www/index.html
-	sed -i "s/{my_user}/$my_user/g" /home/$my_user/www/index.html
-	cp $php_script_template /home/$my_user/www/$php_script
-	chown -R $my_user:$my_user /home/$my_user
+	cp -r /etc/skel /home/$username
+	mkdir /home/$username/www
 
-	# vhost
-	cp $vhost_template /etc/apache2/sites-available/$my_user.conf
-	sed -i "s/{domain_name}/$domain_name/g" /etc/apache2/sites-available/$my_user.conf
-	sed -i "s/{my_user}/$my_user/g" /etc/apache2/sites-available/$my_user.conf
-	a2ensite $my_user
+	# copy php index file to website directory
+	cp template-index.php /home/$username/www/index.php
 
-	# database
-	echo "CREATE DATABASE $my_user DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" | mysql
-	echo "CREATE USER '$my_user'@'%';" | mysql
-	echo "GRANT ALL PRIVILEGES ON $my_user.* TO '$my_user'@'%';" | mysql
+	# edit file to match selected username
+	sed -i "s/{username}/$username/g" /home/$username/www/index.php
+
+	# set owner and permissions of website directory
+	chown -R $username:$username /home/$username
+	chmod 755 /home/$username/www
+	find /home/$username/www -t d -exec chmod 755 {}\;
+	find /home/$username/www -t f -exec chmod 644 {}\;
+
+	# copy vhost file to apache2 directory
+	cp $vhost_template /etc/apache2/sites-available/$username.conf
+
+	# edit file to match selected username
+	sed -i "s/{domain}/$domain/g" /etc/apache2/sites-available/$username.conf
+	sed -i "s/{username}/$username/g" /etc/apache2/sites-available/$username.conf
+	a2ensite $username
+
+	# create database and database user
+	echo "CREATE DATABASE $username DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" | mysql
+	echo "CREATE USER '$username'@'localhost';" | mysql
+	echo "GRANT ALL PRIVILEGES ON $username.* TO '$username'@'localhost';" | mysql
 	echo "FLUSH PRIVILEGES;" | mysql
 
-	# php fpm
-	cp $pool_template /etc/php/7.3/fpm/pool.d/$my_user.conf
-	sed -i "s/{my_user}/$my_user/g" /etc/php/7.3/fpm/pool.d/$my_user.conf
+	# create a dedicated php session directory
+	mkdir /var/lib/php/sessions/$username
+
+	# set appropriate rights (drwx-wx-wt) on the dedicated php sessions directory
+	chmod 1733 /var/lib/php/sessions/$username
+
+	# copy pool template file to php fpm pool directory
+	cp template-pool.conf /etc/php/$php_version/fpm/pool.d/$username.conf
+
+	# edit file to match selected username
+	sed -i "s/{username}/$username/g" /etc/php/$php_version/fpm/pool.d/$username.conf
+	sed -i "s/{domain}/$domain/g" /etc/php/$php_version/fpm/pool.d/$username.conf
 done
 
 systemctl restart apache2
-systemctl restart php7.3-fpm
+systemctl restart php$php_version-fpm
 
