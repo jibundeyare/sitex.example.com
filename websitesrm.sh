@@ -26,8 +26,8 @@ do
 	sudo rm -f /var/log/apache2/$username.$domain.error.log*
 
 	# database
-	echo "DROP USER '$username'@'localhost';" | sudo mysql
-	echo "DROP DATABASE $username;" | sudo mysql
+	echo "DROP USER IF EXISTS '$username'@'localhost';" | sudo mysql
+	echo "DROP DATABASE IF EXISTS $username;" | sudo mysql
 	echo "FLUSH PRIVILEGES;" | sudo mysql
 
 	# php fpm
