@@ -27,8 +27,8 @@ do
 	# set owner and permissions of website directory
 	sudo chown -R $username:$username /home/$username
 	sudo chmod 755 /home/$username/www
-	sudo find /home/$username/www -type d -exec chmod 755 {}\;
-	sudo find /home/$username/www -type f -exec chmod 644 {}\;
+	sudo find /home/$username/www -type d -exec chmod 755 {} \;
+	sudo find /home/$username/www -type f -exec chmod 644 {} \;
 
 	# copy vhost file to apache2 directory
 	sudo cp $vhost_template /etc/apache2/sites-available/$username.conf
