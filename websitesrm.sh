@@ -2,8 +2,8 @@
 
 source websitesconf.sh
 
-systemctl stop apache2
-systemctl stop php$php_version-fpm
+sudo systemctl stop apache2
+sudo systemctl stop php$php_version-fpm
 
 ids="$(seq -w $websites_start $websites_end)"
 
