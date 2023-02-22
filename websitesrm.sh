@@ -14,30 +14,30 @@ do
 	echo "deleting $username"
 
 	# account
-	userdel $username
+	sudo userdel $username
 
 	# folder
-	rm -fr /home/$username
+	sudo rm -fr /home/$username
 
 	# vhost
-	a2dissite $username
-	rm /etc/apache2/sites-available/$username.conf
-	rm /var/log/apache2/$username.$domain.access.log*
-	rm /var/log/apache2/$username.$domain.error.log*
+	sudo a2dissite $username
+	sudo rm /etc/apache2/sites-available/$username.conf
+	sudo rm /var/log/apache2/$username.$domain.access.log*
+	sudo rm /var/log/apache2/$username.$domain.error.log*
 
 	# database
-	echo "DROP USER '$username'@'localhost';" | mysql
-	echo "DROP DATABASE $username;" | mysql
-	echo "FLUSH PRIVILEGES;" | mysql
+	echo "DROP USER '$username'@'localhost';" | sudo mysql
+	echo "DROP DATABASE $username;" | sudo mysql
+	echo "FLUSH PRIVILEGES;" | sudo mysql
 
 	# php fpm
-	rm /etc/php/$php_version/fpm/pool.d/$username.conf
+	sudo rm /etc/php/$php_version/fpm/pool.d/$username.conf
 
 	# remove the dedicated php session directory
-	rm -r /var/lib/php/sessions/$username
+	sudo rm -r /var/lib/php/sessions/$username
 
 done
 
-systemctl start apache2
-systemctl start php$php_version-fpm
+sudo systemctl start apache2
+sudo systemctl start php$php_version-fpm
 

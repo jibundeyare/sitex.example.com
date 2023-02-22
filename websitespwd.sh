@@ -11,11 +11,11 @@ do
 	echo "updating password for $username"
 
 	# set account password
-	echo "$username:$user_passwd_base$username" | chpasswd
+	echo "$username:$user_passwd_base$username" | sudo chpasswd
 
 	# set database user password
-	echo "GRANT USAGE ON *.* TO '$username'@'localhost' IDENTIFIED BY '$mysql_passwd_base$username';" | mysql
+	echo "GRANT USAGE ON *.* TO '$username'@'localhost' IDENTIFIED BY '$mysql_passwd_base$username';" | sudo mysql
 done
 
-systemctl restart sshd
+sudo systemctl restart sshd
 
